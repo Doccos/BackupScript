@@ -32,7 +32,7 @@ if [ -n "$6" ]; then SYNCYEAR=$6 ; else  SYNCYEAR=0;  fi
 SC=10
 while [ $SC -gt 0 ]
 do
-ssh -x -p $PORT $SERVER " /opt/backup/beforebackup.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
+ssh -x -p $PORT $SERVER " /opt/backupScript/scripts/beforebackup.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
 echo "---------------------------"
 echo "Backup: $NAME"
 echo "---------------------------"
@@ -46,7 +46,7 @@ done
 SCC=1
 while [ $SCC -gt 0  ]
 do
-	STATUS=$(ssh -p $PORT $SERVER  cat /opt/backup/tmp/$NAME.$TIME 2>&1)
+	STATUS=$(ssh -p $PORT $SERVER  cat/opt/backupScript/tmp/$NAME.$TIME 2>&1)
 	echo "Warte bis BeforeBackup Script fertig ist Status: $STATUS Counter: $SCC"
 	echo $STATUS
 	SCC=$[$SCC+1];
@@ -73,7 +73,7 @@ do
 	COUNTER=$MAXRSYNC
 	while [ $COUNTER -gt 0 ]
 	do
-		rsync -e "ssh  -p $PORT" -avz --numeric-ids --delete --delete-excluded --ignore-errors --exclude-from '/opt/backup/exclude.txt' $SERVER:$ZEILE/  $BACKUPDIR/
+		rsync -e "ssh  -p $PORT" -avz --numeric-ids --delete --delete-excluded --ignore-errors --exclude-from '/opt/backupScript/exclude.txt' $SERVER:$ZEILE/  $BACKUPDIR/
 
 
 		if  [ $? = 24 -o $? = 0 ] ; then
@@ -104,8 +104,8 @@ ORDNERBEZ=$(date +"%Y.%m.%d-%H.%M")
 cp -al $DATAPATH/$NAME'/akt' $DATAPATH/$NAME'/daily/'$ORDNERBEZ
 touch $DATAPATH/$NAME'/daily/'$ORDNERBEZ
 #####Check Letzter Monat
-if [ -f "/opt/backup/tmp/lastmon.$NAME" ]; then  LASTM=$(tail /opt/backup/tmp/lastmon.$NAME) ;  fi
-if [ -f "/opt/backup/tmp/lastyear.$NAME" ]; then  LASTY=$(tail /opt/backup/tmp/lastyear.$NAME) ;  fi
+if [ -f "/opt/backupScript/tmp/lastmon.$NAME" ]; then  LASTM=$(tail /opt/backup/tmp/lastmon.$NAME) ;  fi
+if [ -f "/opt/backupScript/tmp/lastyear.$NAME" ]; then  LASTY=$(tail /opt/backup/tmp/lastyear.$NAME) ;  fi
 
 if [ $SYNCMONTH -gt 0 ] && ! [ $LASTM -eq $MONAT ]
 then
@@ -136,7 +136,7 @@ fi
 SC=10
 while [ $SC -gt 0 ]
 do
-ssh -x  -p $PORT $SERVER " /opt/backup/afterbackup.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
+ssh -x  -p $PORT $SERVER " /opt/backupScript/afterbackup.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
 echo "Starte AfterBackup Script"
 #echo $?
 SC=$?

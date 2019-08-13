@@ -28,7 +28,8 @@ if [ -n "$6" ]; then SYNCYEAR=$6 ; else  SYNCYEAR=0;  fi
 for ZEILE in $7
 do
   echo "$ZEILE"
-        BACKUPDIR=/var/backup/$NAME'/akt'$ZEILE
+        #BACKUPDIR=/var/backup/$NAME'/akt'$ZEILE
+        BACKUPDIR=$8/$NAME'/akt'$ZEILE
          if  [ -d $ZEILE ] ; then
 
                 SC=10
@@ -60,7 +61,7 @@ done
                 SC=10
                 while [ $SC -gt 0 ]
                 do
-                        ssh -x  -p $PORT $SERVER " $MYDIR/afterbackupTo.sh $NAME $SYNCDAY $SYNCMONTH $SYNCYEAR </dev/null >/dev/null 2>&1 & "
+                        ssh -x  -p $PORT $SERVER " /opt/backupScript/scripts/afterBackupTo.sh $NAME $SYNCDAY $SYNCMONTH $SYNCYEAR $BACKUPDIR </dev/null >/dev/null 2>&1 & "
                         echo "Starte BackupTo ende Script"
 
                         SC=$?

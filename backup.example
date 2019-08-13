@@ -1,0 +1,4 @@
+Backup To
+
+#/opt/backupScript/backupTo.sh serveradress port backupDirName days months years "dirs to backup separated by space" "target dir on server"
+#/opt/backupScript/backupTo.sh test.at 22 myBackup 30 12 2 "/var/www /home" "/var/backup"
