@@ -11,7 +11,7 @@ if [ -n "$3" ]; then SYNCMONTH=$3 ; else  SYNCMONTH=0;  fi
 if [ -n "$4" ]; then SYNCYEAR=$4 ; else  SYNCYEAR=0;  fi
 
 #/opt/backupScript/scripts/moveBackup.sh $1 $2 $3 $4 $5 &
-
+DATAPATH=$5
 if ! [ -d $DATAPATH/$NAME'/daily' ] ; then
         mkdir -p $DATAPATH/$NAME'/daily'
 fi
