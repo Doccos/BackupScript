@@ -61,7 +61,7 @@ done
                 while [ $SC -gt 0 ]
                 do
                         echo "Starte BackupTo ende Script "
-                        ssh -x  -p $PORT $SERVER " /opt/backupScript/scripts/afterBackupTo.sh $NAME $SYNCDAY $SYNCMONTH $SYNCYEAR $8 </dev/null >/dev/null 2>&1 & "
+                        ssh -p $PORT $SERVER " /opt/backupScript/scripts/afterBackupTo.sh $NAME $SYNCDAY $SYNCMONTH $SYNCYEAR $8 </dev/null >/dev/null 2>&1 & "
 
                         SC=$?
                         sleep 1

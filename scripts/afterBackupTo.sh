@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "$1 $2 $3 $4 $5 " > /opt/backupScript/log.log
 if [ -n "$1" ] ; then
         NAME="$1"
 else
