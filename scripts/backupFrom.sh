@@ -136,7 +136,7 @@ fi
 SC=10
 while [ $SC -gt 0 ]
 do
-ssh -x  -p $PORT $SERVER " /opt/backupScript/scripts/afterbackup.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
+ssh -x  -p $PORT $SERVER " /opt/backupScript/scripts/afterBackupFrom.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
 echo "Starte AfterBackup Script"
 #echo $?
 SC=$?
