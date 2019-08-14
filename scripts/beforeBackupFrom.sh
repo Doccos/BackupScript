@@ -8,7 +8,7 @@ else
         echo "Error: Keine Bezeichnung übergeben"
         exit
 fi
-echo 0 > /opt/backup/tmp/$1
+echo 0 > /opt/backupScript/tmp/$1
 
 if [ -f /opt/backupScript/scripts/executeBeforeFrom.sh ] ; then
         /bin/bash /opt/backupScript/executeBeforeFrom.sh $BEZ
@@ -16,4 +16,4 @@ fi
 
 
 
-echo 1 > /opt/backup/tmp/$1
+echo 1 > /opt/backupScript/tmp/$1

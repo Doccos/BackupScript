@@ -5,7 +5,6 @@ MAXRSYNC=10
 
 #####START
 TIME=$(date +%s)
-MYDIR="`cd $0; pwd`"
 
 #echo $TIME
 if [ -n "$1" ] ; then
