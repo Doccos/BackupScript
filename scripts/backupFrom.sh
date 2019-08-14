@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATAPATH=/shared/data/backup
+
 MAXRSYNC=10
 
 #####START
@@ -28,11 +28,11 @@ if [ -n "$6" ]; then SYNCYEAR=$6 ; else  SYNCYEAR=0;  fi
 #echo $4
 ###BEVOR BACKUP REMOTE SCRIPT AUSFUEHREN
 #ssh -t  -i /root/.ssh/backup.identity -p $PORT $SERVER "sh -c '( ( /opt/backup/beforebackup.sh asdasdaddddd ) )'"
-
+DATAPATH=$8
 SC=10
 while [ $SC -gt 0 ]
 do
-ssh -x -p $PORT $SERVER " /opt/backupScript/scripts/beforebackup.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
+ssh -x -p $PORT $SERVER " /opt/backupScript/scripts/beforeBackupFrom.sh $NAME.$TIME </dev/null >/dev/null 2>&1 & "
 echo "---------------------------"
 echo "Backup: $NAME"
 echo "---------------------------"
@@ -46,9 +46,10 @@ done
 SCC=1
 while [ $SCC -gt 0  ]
 do
-	STATUS=$(ssh -p $PORT $SERVER  cat/opt/backupScript/tmp/$NAME.$TIME 2>&1)
+    sleep 2
+	STATUS=$(ssh -p $PORT $SERVER  cat /opt/backupScript/tmp/$NAME.$TIME 2>&1)
 	echo "Warte bis BeforeBackup Script fertig ist Status: $STATUS Counter: $SCC"
-	echo $STATUS
+
 	SCC=$[$SCC+1];
 	if [ $STATUS -eq 1 ]; then
 		SCC=0;
@@ -58,7 +59,7 @@ do
 		SCC=0;
 		exit;
 	fi;
-	sleep 10
+
 done
 
 
@@ -91,8 +92,8 @@ done
                 mkdir -p $DATAPATH/$NAME'/daily'
         fi
 #####Ueberpruefe ob tmp ordner exisitiert
-        if ! [ -d /opt/backup/tmp ] ; then
-                mkdir -p /opt/backup/tmp
+        if ! [ -d /opt/backupScript/tmp ] ; then
+                mkdir -p /opt/backupScript/tmp
         fi
 ########################################
 MONAT=$(date +%-m)

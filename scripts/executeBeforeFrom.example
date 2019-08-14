@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+#################### SQL ###########################
+
+# path to backup directory...
+
+dbBackup="/root/sql"
+excludeDB="information_schema performance_schema"
+# *************************************************************
+# program action...
+dbTemp="/tmp/sql"
+[  -d "$dbTemp" ]  && rm -R $dbTemp
+[ ! -d "$dbTemp" ]  && mkdir -p $dbTemp
+
+# get current date ( YYYY-MM-DD )...
+date=$( date +%Y-%m-%d )
+# create backup directory if not exists...
+[ ! -d "$dbBackup" ]  && mkdir -p $dbBackup
+for db in $( mysql --defaults-extra-file=/etc/mysql/debian.cnf  -Bse "show databases" ); do
+        # get mysqldump of current database...
+#       echo "Dump $db"
+        skipdb=-1
+        if [ "$excludeDB" != "" ];
+        then
+                for i in $excludeDB
+                do
+                    [ "$db" == "$i" ] && skipdb=1 || :
+                done
+        fi
+        if [ "$skipdb" == "-1" ] ; then
+#               echo "Update it"
+                echo "Dump $db"
+#                mysqldump -u $dbUsername --password=$dbPassword  --opt --databases $db --skip-dump-date | gzip -9n >${dbTemp}/${db}.sql.gz
+                mysqldump --defaults-extra-file=/etc/mysql/debian.cnf --opt --databases $db --skip-dump-date | gzip -9n >${dbTemp}/${db}.sql.gz
+
+        fi
+done
+echo "Start Rsync"
+rsync -v --checksum  $dbTemp/* $dbBackup/
+[  -d "$dbTemp" ]  && rm -R $dbTemp
