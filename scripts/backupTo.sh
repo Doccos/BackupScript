@@ -4,7 +4,7 @@ MAXRSYNC=10
 
 #####START
 TIME=$(date +%s)
-MYDIR="`cd $0; pwd`"
+
 #echo $TIME
 if [ -n "$1" ] ; then
         SERVER="$1"
@@ -52,7 +52,6 @@ do
                         COUNTER=0
                         fi
                         COUNTER=$[$COUNTER-1]
-                        echo hallo
                 done
         fi
 
@@ -61,8 +60,8 @@ done
                 SC=10
                 while [ $SC -gt 0 ]
                 do
+                        echo "Starte BackupTo ende Script $NAME $SYNCDAY $SYNCMONTH $SYNCYEAR $BACKUPDIR"
                         ssh -x  -p $PORT $SERVER " /opt/backupScript/scripts/afterBackupTo.sh $NAME $SYNCDAY $SYNCMONTH $SYNCYEAR $BACKUPDIR </dev/null >/dev/null 2>&1 & "
-                        echo "Starte BackupTo ende Script"
 
                         SC=$?
                         sleep 1
