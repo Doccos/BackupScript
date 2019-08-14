@@ -73,7 +73,7 @@ do
 	COUNTER=$MAXRSYNC
 	while [ $COUNTER -gt 0 ]
 	do
-		rsync -e "ssh  -p $PORT" -avz --numeric-ids --delete --delete-excluded --ignore-errors --exclude-from '/opt/backupScript/exclude.txt' $SERVER:$ZEILE/  $BACKUPDIR/
+		rsync -e "ssh  -p $PORT" -avz --numeric-ids --delete --delete-excluded --ignore-errors  $SERVER:$ZEILE/  $BACKUPDIR/
 
 
 		if  [ $? = 24 -o $? = 0 ] ; then
@@ -104,8 +104,8 @@ ORDNERBEZ=$(date +"%Y.%m.%d-%H.%M")
 cp -al $DATAPATH/$NAME'/akt' $DATAPATH/$NAME'/daily/'$ORDNERBEZ
 touch $DATAPATH/$NAME'/daily/'$ORDNERBEZ
 #####Check Letzter Monat
-if [ -f "/opt/backupScript/tmp/lastmon.$NAME" ]; then  LASTM=$(tail /opt/backup/tmp/lastmon.$NAME) ;  fi
-if [ -f "/opt/backupScript/tmp/lastyear.$NAME" ]; then  LASTY=$(tail /opt/backup/tmp/lastyear.$NAME) ;  fi
+if [ -f "/opt/backup/tmp/lastmon" ]; then  LASTM=$(tail /opt/backupScript/tmp/lastmon) ; else   LASTM=0 ; fi
+if [ -f "/opt/backup/tmp/lastyear" ]; then  LASTY=$(tail /opt/backupScript/tmp/lastyear) ; else   LASTY=0 ; fi
 
 if [ $SYNCMONTH -gt 0 ] && ! [ $LASTM -eq $MONAT ]
 then
