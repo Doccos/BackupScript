@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #DATAPATH="/var/backup"
-echo "$1 $2 $3 $4 $5 " > /var/backup/backupScript/log.log
+echo "$1 $2 $3 $4 $5 " > /opt/backupScript/log.log
 DATAPATH=$5
 if [ -n "$1" ] ; then
         NAME="$1"
