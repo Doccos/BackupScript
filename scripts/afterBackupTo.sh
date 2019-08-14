@@ -30,8 +30,8 @@ MONAT=$(( ($MONAT * ($JAHR * 12)) ))
 cp -al $DATAPATH/$NAME'/akt' $DATAPATH/$NAME'/daily/'$ORDNERBEZ
 touch $DATAPATH/$NAME'/daily/'$ORDNERBEZ
 #####Check Letzter Monat
-if [ -f "/opt/backup/tmp/lastmon" ]; then  LASTM=$(tail /opt/backupScript/tmp/lastmon) ; else   LASTM=0 ; fi
-if [ -f "/opt/backup/tmp/lastyear" ]; then  LASTY=$(tail /opt/backupScript/tmp/lastyear) ; else   LASTY=0 ; fi
+if [ -f "/opt/backup/tmp/lastmon" ]; then  LASTM=$(tail /opt/backupScript/tmp/lastmon.$NAME) ; else   LASTM=0 ; fi
+if [ -f "/opt/backup/tmp/lastyear" ]; then  LASTY=$(tail /opt/backupScript/tmp/lastyear.$NAME) ; else   LASTY=0 ; fi
 
 if [ $SYNCMONTH -gt 0 ] && ! [ $LASTM -eq $MONAT ]
 then
@@ -40,7 +40,7 @@ then
         fi
         cp -al $DATAPATH/$NAME'/akt' $DATAPATH/$NAME'/month/'$ORDNERBEZ
         touch $DATAPATH/$NAME'/month/'$ORDNERBEZ
-	echo $MONAT > /opt/backupScript/tmp/lastmon
+	echo $MONAT > /opt/backupScript/tmp/lastmon.$NAME
 
 fi
 
@@ -52,7 +52,7 @@ then
         fi
         cp -al $DATAPATH/$NAME'/akt' $DATAPATH/$NAME'/year/'$ORDNERBEZ
         touch $DATAPATH/$NAME'/year/'$ORDNERBEZ
-	echo $JAHR > /opt/backupScript/tmp/lastyear
+	echo $JAHR > /opt/backupScript/tmp/lastyear.$NAME
 fi
 
 find  "$DATAPATH/$NAME/daily/" -mindepth 1 -maxdepth 1 -type d -ctime +$SYNCDAY -exec echo {} \;
