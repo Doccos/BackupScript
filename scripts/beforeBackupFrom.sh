@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 if ! [ -d /opt/backupScript/tmp ] ; then
-        mkdir -P /opt/backupScript/tmp
+        mkdir -p /opt/backupScript/tmp
 fi
 if [ -n "$1" ] ; then
         BEZ="$1"
