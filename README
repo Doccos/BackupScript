@@ -1,5 +1,5 @@
 apt install git -y
-mkdir -P /opt/backupScript
+mkdir -p /opt/backupScript
 cd /opt/backupScript
 git clone https://github.com/Doccos/BackupScript.git .
 cp /opt/backupScript/backup.example /opt/backupScript/backup.sh
